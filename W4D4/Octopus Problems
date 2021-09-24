@@ -1,0 +1,96 @@
+fish = ['fish', 'fiiish', 'fiiiiish', 'fiiiish', 'fffish', 'ffiiiiisshh', 'fsh', 'fiiiissshhhhhh']
+
+#Sluggish Octopus
+
+def sluggish_octopus
+
+res = ""
+max = 0
+
+(0...fish.length).each do |i|
+    (i + 1...fishe.length).each do |j|
+        res = fish[i] if fish[i].length > fish[j].length
+    end
+end
+
+end
+
+#Dominant Octopus
+
+def dominant_octopus
+    return merge_sort(fish).last
+end
+
+def merge_sort(fish)
+    return fish if fish.length <= 1
+    mid = fish.length / 2
+    left = fish[0...mid]
+    right = fish[mid..-1]
+    merge(merge_sort(left), merge_sort(right))
+end
+
+def merge(left, right)
+    res = []
+    until left.empty? || right.empty?
+        if left.first < right.first
+            res << left.shift
+        else
+            res << right.shift
+        end
+    end
+    res + left + right
+return 
+
+
+
+#Clever Octopus
+
+def clever_octopus
+    max = 0
+    res = ""
+
+    fish.each do |f|
+        if f.length > max
+            max = f.length
+            res = f
+        end
+    end
+    res
+end
+
+tiles_array = ["up", "right-up", "right", "right-down", "down", "left-down", "left",  "left-up" ]
+
+#Slow Dance
+
+def slow_dance(target, tiles_array)
+    tiles_array.each_with_index do |t, i|
+        return i if t == target
+    end
+end
+
+target = "up" 
+p slow_dance(target, tiles_array)
+
+target = "right-down"
+p slow_dance(target,tiles_array)
+
+#Constant Dance
+
+new_data_structure = {}
+
+tiles_array.each_with_index do |t, i|
+    new_data_structure[i] = t
+end
+
+def constant_dance(taregt, new_data_structure)
+    new_data_structure(target)
+end
+
+target = "up"
+p constant_dance(target, new_data_structure)
+
+target = "right-down"
+p constant_dance(target, new_data_structure)
+
+
+        
