@@ -90,13 +90,32 @@
 /*!**********************************!*\
   !*** ./actions/giphy_actions.js ***!
   \**********************************/
-/*! no exports provided */
+/*! exports provided: receiveSearchGiphys, fetchSearchGiphys, RECEIVE_SEARCH_GIPHYS, FETCH_SEARCH_GIPHYS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveSearchGiphys", function() { return receiveSearchGiphys; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchGiphys", function() { return fetchSearchGiphys; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SEARCH_GIPHYS", function() { return RECEIVE_SEARCH_GIPHYS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_SEARCH_GIPHYS", function() { return FETCH_SEARCH_GIPHYS; });
 /* harmony import */ var _util_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/api_util */ "./util/api_util.js");
 
+var receiveSearchGiphys = function receiveSearchGiphys(giphys) {
+  return {
+    type: RECEIVE_SEARCH_GIPHYS,
+    giphys: giphys
+  };
+};
+var fetchSearchGiphys = function fetchSearchGiphys(searchTerm) {
+  return function (dispatch) {
+    _util_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchSearchGiphys"](searchTerm).then(function (giphys) {
+      return dispatch(receiveSearchGiphys(giphys.data));
+    });
+  };
+};
+var RECEIVE_SEARCH_GIPHYS = 'RECEIVE_SEARCH_GIPHYS';
+var FETCH_SEARCH_GIPHYS = 'FETCH_SEARCH_GIPHYS';
 
 /***/ }),
 
@@ -104,17 +123,26 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************!*\
   !*** ./components/giphys_index.jsx ***!
   \*************************************/
-/*! no exports provided */
+/*! exports provided: GiphysIndex */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GiphysIndex", function() { return GiphysIndex; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/react.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _giphys_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./giphys_index_item */ "./components/giphys_index_item.jsx");
-/* harmony import */ var _giphys_index_item__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_giphys_index_item__WEBPACK_IMPORTED_MODULE_1__);
 
 
+var GiphysIndex = function GiphysIndex(_ref) {
+  var giphys = _ref.giphys;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, giphys.map(function (giphy) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_giphys_index_item__WEBPACK_IMPORTED_MODULE_1__["GiphysIndexItem"], {
+      key: giphy.id,
+      giphy: giphy
+    });
+  }));
+};
 
 /***/ }),
 
@@ -122,10 +150,21 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./components/giphys_index_item.jsx ***!
   \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: GiphysIndexItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GiphysIndexItem", function() { return GiphysIndexItem; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/react.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
+var GiphysIndexItem = function GiphysIndexItem(_ref) {
+  var giphys = _ref.giphys;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: giphys.images.fixed_height.url
+  }));
+};
 
 /***/ }),
 
@@ -133,7 +172,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************!*\
   !*** ./components/giphys_search.jsx ***!
   \**************************************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -141,8 +180,85 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/react.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _giphys_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./giphys_index */ "./components/giphys_index.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
+ //renders the search bar and handles all of the search logic (keeping track of the query and trigger the AJAX request on submit); renders the GiphysIndex.
+
+var GiphysSearch =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(GiphysSearch, _React$Component);
+
+  function GiphysSearch(props) {
+    var _this;
+
+    _classCallCheck(this, GiphysSearch);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(GiphysSearch).call(this, props));
+    _this.state = {
+      searchTerm: 'gold retriever'
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(GiphysSearch, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchSearchGiphys('golden+retriever');
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState({
+        searchTerm: e.currentTarget.value
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var searchTerm = this.state.searchTerm.split(' ').join('+');
+      this.props.fetchSearchGiphys(searchTerm);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var giphy = this.props.giphy;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: this.state.searchTerm,
+        onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        onClick: this.handleSubmit
+      }, "Search Giphy")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_giphys_index__WEBPACK_IMPORTED_MODULE_1__["GiphysIndex"], {
+        giphys: giphys
+      }));
+    }
+  }]);
+
+  return GiphysSearch;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (GiphysSearch);
 
 /***/ }),
 
@@ -150,17 +266,34 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************!*\
   !*** ./components/giphys_search_container.jsx ***!
   \************************************************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _giphys_search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./giphys_search */ "./components/giphys_search.jsx");
-/* harmony import */ var _actions_giphy_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/giphy_actions */ "./actions/giphy_actions.js");
+/* harmony import */ var _util_api_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/api_util */ "./util/api_util.js");
 
 
 
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    giphys: state.giphys
+  };
+};
+
+var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
+  return {
+    fetchSearchGiphys: function fetchSearchGiphys(searchTerm) {
+      return dispatch(Object(_util_api_util__WEBPACK_IMPORTED_MODULE_2__["fetchSearchGiphys"])(searchTerm));
+    }
+  };
+};
+
+var GiphysSearchContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchtoProps)(_giphys_search__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (GiphysSearchContainer);
 
 /***/ }),
 
@@ -168,7 +301,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************!*\
   !*** ./components/root.jsx ***!
   \*****************************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -180,6 +313,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var Root = function Root(_ref) {
+  var store = _ref.store;
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_1__["Provider"], {
+    store: store
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_giphys_search_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Root);
 
 /***/ }),
 
@@ -197,11 +339,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./store/store.js");
-/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./components/root.jsx");
+/* harmony import */ var _util_api_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util/api_util */ "./util/api_util.js");
+/* harmony import */ var _actions_giphy_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/giphy_actions */ "./actions/giphy_actions.js");
+/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/root */ "./components/root.jsx");
 
 
 
 
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  var store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["configureStore"])();
+  window.store = store;
+  window.fetchSearchGiphys = _util_api_util__WEBPACK_IMPORTED_MODULE_3__["fetchSearchGiphys"];
+  window.receiveSearchGiphys = _actions_giphy_actions__WEBPACK_IMPORTED_MODULE_4__["receiveSearchGiphys"];
+});
 
 /***/ }),
 
@@ -23894,13 +24046,26 @@ module.exports = function(originalModule) {
 /*!************************************!*\
   !*** ./reducers/giphys_reducer.js ***!
   \************************************/
-/*! no exports provided */
+/*! exports provided: giphysReducer */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "giphysReducer", function() { return giphysReducer; });
 /* harmony import */ var _actions_giphy_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/giphy_actions */ "./actions/giphy_actions.js");
 
+var giphysReducer = function giphysReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_giphy_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SEARCH_GIPHYS"]:
+      return action.giphys;
+
+    default:
+      return state;
+  }
+};
 
 /***/ }),
 
@@ -23908,15 +24073,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************!*\
   !*** ./reducers/root_reducer.js ***!
   \**********************************/
-/*! no exports provided */
+/*! exports provided: RootReducer */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RootReducer", function() { return RootReducer; });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/index.js");
 /* harmony import */ var _giphys_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./giphys_reducer */ "./reducers/giphys_reducer.js");
 
 
+var RootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  giphys: _giphys_reducer__WEBPACK_IMPORTED_MODULE_1__["giphysReducer"]
+});
 
 /***/ }),
 
@@ -23924,17 +24093,21 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************!*\
   !*** ./store/store.js ***!
   \************************/
-/*! no exports provided */
+/*! exports provided: configureStore */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "configureStore", function() { return configureStore; });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/index.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _reducers_root_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers/root_reducer */ "./reducers/root_reducer.js");
 
 
 
+var configureStore = function configureStore() {
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_2__["RootReducer"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]));
+};
 
 /***/ }),
 
@@ -23949,9 +24122,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearchGiphys", function() { return fetchSearchGiphys; });
 var fetchSearchGiphys = function fetchSearchGiphys(searchTerm) {
-  $.ajax({
+  return $.ajax({
     method: 'Get',
-    url: 'http://api.giphy.com/v1/gifs/search?q=${OjoKoY4ghDu8QE9nd6HxL671J93ODF9T}&api_key=dc6zaTOxFJmzC&limit=2'
+    url: "http://api.giphy.com/v1/gifs/search?q=".concat(searchTerm, "&api_key=OjoKoY4ghDu8QE9nd6HxL671J93ODF9T&limit=2")
   });
 };
 
